@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController
 
-  def new
+  # respond_to :html, :js
+
+def new
   end
 
   def create
@@ -18,6 +20,30 @@ class SessionsController < ApplicationController
       trigger_rollback_at_app_level
       flash.now[:error] = 'Invalid email/password combination'
       render 'new'
+    end
+  end
+
+  def create_json
+    if signed_in?
+      sign_out
+    end
+
+    param_email = params[:email]
+    if param_email
+      user = User.find_by(email: param_email.downcase)
+    else
+      user = false
+    end
+
+    respond_to do |format|
+      if user && user.authenticate(params[:password])
+        sign_in user
+        format.json {render json: user}
+      else
+        trigger_rollback_at_app_level
+        flash.now[:error] = 'Invalid email/password combination'
+        render 'new'
+      end
     end
   end
 

@@ -1,8 +1,21 @@
 ShopFast::Application.routes.draw do
 
-  resources :users
+  resources :users do
+    member do
+      get :cares_for, :following, :news_feed
+    end
+  end
 
-  resources :sessions,       only: [:new, :create, :destroy]
+
+  resources :sessions,       only: [:new, :create, :destroy] do
+    collection do
+      post :create_json
+    end
+  end
+
+  resources :follows,        only: [:create, :destroy]
+
+
 
   # resources :categories,     only: [:index, :show, :new, :create] do
   #   collection do

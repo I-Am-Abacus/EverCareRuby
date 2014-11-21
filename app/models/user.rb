@@ -5,6 +5,15 @@ class User < ActiveRecord::Base
   belongs_to :current_account, class: Account # todo:later inverse_of: :current, dependent: :nullify
   has_many   :sessions, dependent: :destroy
 
+  has_many   :cared_for_link_following_user, class_name: 'Follow', foreign_key:  :cared_for_user_id, inverse_of: :cared_for_user, dependent: :destroy
+  has_many   :following_link_cared_for_user, class_name: 'Follow', foreign_key:  :following_user_id, inverse_of: :following_user, dependent: :destroy
+
+  has_many   :following_users, through: :cared_for_link_following_user
+  has_many   :cared_for_users, through: :following_link_cared_for_user
+
+  has_many   :news_items
+  has_many   :carer_posted_news_items, class_name: 'NewsItem', foreign_key: :carer_user_id, inverse_of: :carer_user, dependent: :destroy
+
   has_secure_password
 
   enum status: { initial: 1, active: 2, suspended: 3 }

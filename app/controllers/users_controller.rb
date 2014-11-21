@@ -52,18 +52,57 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
 
-  def following
-    @title = 'Following'
-    @user = User.find(params[:id])
-    @users = @user.followed_users.paginate(page: params[:page])
-    render 'show_follow'
+  def cares_for
+    @user = current_user!
+    json1 = @user.as_json(root: true,
+                                  include:
+                                          {cared_for_users:
+                                               {
+                                                except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                                               }
+                                          },
+                                  except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+    )
+
+    pretty_json = JSON.pretty_generate(json1)
+
+    render json: pretty_json
   end
 
-  def followers
-    @title = 'Followers'
-    @user = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
-    render 'show_follow'
+  def following
+    @user = current_user!
+    json1 = @user.as_json(root: true,
+                          include:
+                                  {following_users:
+                                       {
+                                           except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                                       }
+                                  },
+                          except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+    )
+
+    pretty_json = JSON.pretty_generate(json1)
+
+    render json: pretty_json
+
+
+  end
+
+  def news_feed
+    @user = current_user!
+    json1 = @user.as_json(root: true,
+                          include:
+                                  {news_items:
+                                       {
+                                           except: [:updated_at]
+                                       }
+                                  },
+                          except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+    )
+
+    pretty_json = JSON.pretty_generate(json1)
+
+    render json: pretty_json
   end
 
   private
