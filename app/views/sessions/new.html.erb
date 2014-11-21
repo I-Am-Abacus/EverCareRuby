@@ -1,0 +1,30 @@
+<% provide(:title, 'Sign in') %>
+<% provide(:navbar_h1, 'Sign in') %>
+<h1>Sign in</h1>
+
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <%= form_tag sessions_path do %>
+
+      <%= label_tag :email %>
+      <%= text_field_tag :email, '', autofocus: true %>
+
+      <%= label_tag :password %>
+      <%= password_field_tag :password %>
+
+      <% STYLE_COUNT.times do |i| %>
+        <div class="center <%= STYLES[i] %>">
+          <%= submit_tag 'Sign in', class: ACT_BUTTONS[i] %>
+        </div>
+      <% end %>
+
+    <% end %>
+  </div>
+</div>
+
+<br><br>
+<% STYLE_COUNT.times do |i| %>
+  <div class="center <%= STYLES[i] %>">
+    <div>New user? <%= link_to 'Sign up now!', signup_path, class: ACT_BUTTONS[i] %></div>
+  </div>
+<% end %>

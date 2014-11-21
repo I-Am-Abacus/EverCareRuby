@@ -1,0 +1,5 @@
+<% STYLE_COUNT.times do |i| %>
+  <div class="center <%= STYLES[i] %>">
+    <%= button_to text, path, method: :get, class: ROW_BUTTONS[i] %>
+  </div>
+<% end %>

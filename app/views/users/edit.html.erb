@@ -1,0 +1,26 @@
+<% provide(:title, 'Update your profile') %>
+<% provide(:navbar_h1, 'Update your profile') %>
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="col-md-6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'fields', f: f %>
+      <%= render 'shared/save_changes_button', f: f, label: nil %>
+    <% end %>
+
+    <br><br>
+    <% STYLE_COUNT.times do |i| %>
+      <div class="center <%= STYLES[i] %>">
+        <%= button_to 'Signoff from all devices', signout_all_path, method: 'delete', data: { confirm: 'Are you sure?'},
+                      class: WIDE_ACT_BUTTONS[i]
+        %>
+      </div>
+    <% end %>
+
+    <br><br>
+    <div>Your gravatar:-</div>
+    <%= gravatar_for @user %>
+    <a href="http://gravatar.com/emails" target="_blank">change</a>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<% provide(:title, 'Admin options (admin only)') %>
+<% provide(:navbar_h1, 'Admin options (admin only)') %>
+<h1>Admin options (admin only)</h1>
+
+<% if signed_in? && current_user!.admin? %>
+  <div class="center">
+    <%= link_to 'Maintain knowledgebase', families_path, class: BIG_BUTTON %>
+  </div>
+<% else %>
+  <div class="center">
+    <%= link_to 'You don\'t belong here', root_path, class: BIG_BUTTON %>
+  </div>
+<% end %>

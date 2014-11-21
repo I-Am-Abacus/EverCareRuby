@@ -1,0 +1,16 @@
+<% provide(:title, 'Sign up') %>
+<% provide(:navbar_h1, 'Sign up') %>
+<h1>Sign up</h1>
+
+<div class="row">
+  <div class="col-md-6 offset3">
+    <%= form_for(@user) do |f| %>
+      <%= render 'fields', f: f %>
+      <% STYLE_COUNT.times do |i| %>
+        <div class="actions <%= STYLES[i] %>">
+          <%= f.submit('Create my account', class: ACT_BUTTONS[i]) %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

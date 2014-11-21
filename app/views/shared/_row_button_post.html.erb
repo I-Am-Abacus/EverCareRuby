@@ -1,0 +1,26 @@
+<%
+   modifier = local_assigns.fetch :mod, nil
+   modifier = modifier.downcase if modifier
+   case modifier
+      when 'grn', 'green'
+        class_array = ROW_BUTTONS_GRN
+
+      when 'red'
+        class_array = ROW_BUTTONS_RED
+
+      when 'lo', 'low', 'def', 'default'
+        class_array = ROW_BUTTONS_LO
+
+      when nil
+        class_array = ROW_BUTTONS
+
+      else
+        raise 'unknown modifier'
+   end
+%>
+
+<% STYLE_COUNT.times do |i| %>
+  <div class="center <%= STYLES[i] %>">
+    <%= button_to text, path, class: class_array[i] %>
+  </div>
+<% end %>

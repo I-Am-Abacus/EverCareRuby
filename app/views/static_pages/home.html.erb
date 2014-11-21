@@ -1,0 +1,57 @@
+<% if signed_in? %>
+  <% provide(:navbar_h1, 'Welcome to the EverCare WebApp') %>
+  <h1>Welcome to the EverCare WebApp</h1>
+  <br class="<%= DESKTOP %>">
+
+  <% if current_user!.admin? %>
+    <table class="table table-page-links">
+      <thead>
+        <tr>
+          <th>Admin only:-</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= link_to 'Admin options', admin_path, class: BIG_BUTTON %></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  <% end %>
+
+  <table class="table table-page-links">
+    <% if current_user!.admin? %>
+      <thead>
+        <tr>
+          <th>Non-admin options:-</th>
+        </tr>
+      </thead>
+    <% end %>
+
+    <tbody>
+      <tr>
+        <td ><%= link_to 'Stuff', root_path, class: BIG_BUTTON %></td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+
+<% else %>
+  <% provide(:navbar_h1, 'Please sign up or sign in') %>
+
+  <div class="center jumbotron">
+    <h1>Welcome to the Everest Team's WebApp</h1>
+
+    <h2>
+      This is the home page for the EverCare WebApp - for Social Care.
+    </h2>
+
+    <%= link_to 'Sign up now!', signup_path, class: ACT_BUTTON_DESK + 'btn-large' %>
+
+    <p>Some invitational text here</p>
+
+    <%= link_to 'Sign up now!', signup_path, class: ACT_BUTTON_DESK + 'btn-large' %>
+
+  </div>
+
+<% end %>

@@ -1,0 +1,6 @@
+<% STYLE_COUNT.times do |i| %>
+  <div class="actions <%= STYLES[i] %>">
+    <% button_label = label ? label : 'Save changes' %>
+    <%= f.submit(button_label, class: SUBMIT_BUTTONS[i]) %>
+  </div>
+<% end %>

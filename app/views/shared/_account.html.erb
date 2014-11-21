@@ -1,0 +1,9 @@
+<div>
+  <% if account %>
+    <% unless f.nil? %>
+      <%= f.hidden_field(:account_id, value: account.id) %>
+    <% end %>
+  <% else %>
+  <% end %>
+</div>
+<br/>
