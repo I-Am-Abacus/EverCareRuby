@@ -2,7 +2,7 @@ ShopFast::Application.routes.draw do
 
   # match '*path', :controller => 'application', :action => 'handle_options_request', :constraints => {:method => 'OPTIONS'}
 
-  match 'users', to: 'users#index', via: [:options]
+  # match 'users', to: 'users#index', via: [:options]
   match 'users/:id', to: 'users#index', via: [:options]
   match 'users/:id/following', to: 'users#index', via: [:options]
   match 'users/:id/news_feed', to: 'users#index', via: [:options]
