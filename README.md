@@ -3,6 +3,13 @@
 Rails element of web app to to manage Care Provision for vulnerable people.
 
 
+
+NB The application as demonstrated on the night at SyncTheCity did not integrate calls of this back-end, due to an issue with maintaining session after sign-on. This is an issue we could have resolved with a little more time - probably by not using SessionStore. Note that this is the first time I have written any application that integrates with a front-end.
+
+Please also note that we're aware this app has some workarounds & inconsistencies in API calling that would be cleaned up with a little more time for research. 
+
+
+
 This application is based on elemets of the following (for user / session / static page support):-
 
     # Ruby on Rails Tutorial: sample application
@@ -49,3 +56,4 @@ This application is based on elemets of the following (for user / session / stat
      */
 
 
+Please ignore any elements relating to the accounts model - while these are not in the code from the above tutorial, they are also not used in this application.
