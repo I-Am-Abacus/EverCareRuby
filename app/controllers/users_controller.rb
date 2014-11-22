@@ -110,7 +110,7 @@ class UsersController < ApplicationController
   def following
     id = params[:id]
     user = User.find(id)
-    following_users = user.following_users.take(999)
+    following_users = user.following_users
     json1 = following_users.as_json(root: false,
                                     except: [:email, :password_digest, :status, :admin, :current_account_id, :created_at, :updated_at]
     )

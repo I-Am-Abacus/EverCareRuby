@@ -27,7 +27,8 @@ ShopFast::Application.routes.draw do
   # match 'sessions/:id/news_feed', to: 'sessions#index', via: [:options]
   # match 'sessions/profile', to: 'usessionsindex', via: [:options]
   # match 'sessions/cares_for', to: 'sessions#index', via: [:options]
-  match 'sessions/create_json', to: 'sessions#create_json', via: [:options], defaults: { :format => 'json' }
+  match 'sessions/create_json', to: 'sessions#index', via: [:options]
+  # match 'sessions/create_json', to: 'sessions#create_json', via: [:options], defaults: { :format => 'json' }
 
   resources :sessions,       only: [:new, :create, :destroy] do
     collection do

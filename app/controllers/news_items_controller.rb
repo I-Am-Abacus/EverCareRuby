@@ -58,7 +58,7 @@ class NewsItemsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def news_item_params
-      params.require(:news_item).permit(:user_id, :carer_user_id, :narrative)
+      params.require(:news_item).permit(:user_id, :carer_user_id, :location, :narrative)
     end
 
   # def set_headers
