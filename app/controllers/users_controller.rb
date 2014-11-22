@@ -8,7 +8,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # @microposts = @user.microposts.paginate(page: params[:page])
+    respond_to do |format|
+      user_json = @user.as_json(root:   true,
+                                except: [:password_digest, :admin, :status, :current_account_id, :created_at, :updated_at]
+      )
+
+      pretty_json = JSON.pretty_generate(user_json) # todo:later debug only
+
+      format.json { render json: pretty_json }
+    end
   end
 
   def new
