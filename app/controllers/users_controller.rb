@@ -89,7 +89,7 @@ class UsersController < ApplicationController
   def profile
     @user = current_user!
     json1 = @user.as_json(root: true,
-                          except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                          except: [:email, :password_digest, :status, :admin, :current_account_id, :created_at, :updated_at]
     )
 
     pretty_json = JSON.pretty_generate(json1)
@@ -99,7 +99,7 @@ class UsersController < ApplicationController
 
   def cares_for
     json1 = current_user!.cared_for_users.as_json(root: false,
-                              except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                              except: [:email, :password_digest, :status, :admin, :current_account_id, :created_at, :updated_at]
     )
 
     pretty_json = JSON.pretty_generate(json1)
@@ -112,7 +112,7 @@ class UsersController < ApplicationController
     user = User.find(id)
     following_users = user.following_users.take(999)
     json1 = following_users.as_json(root: false,
-                                    except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                                    except: [:email, :password_digest, :status, :admin, :current_account_id, :created_at, :updated_at]
     )
 
     pretty_json = JSON.pretty_generate(json1)
@@ -130,7 +130,7 @@ class UsersController < ApplicationController
                                            except: [:updated_at]
                                        }
                                   },
-                          except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                          except: [:email, :password_digest, :status, :admin, :current_account_id, :created_at, :updated_at]
     )
 
     pretty_json = JSON.pretty_generate(json1)

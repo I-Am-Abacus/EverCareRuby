@@ -40,22 +40,26 @@ def new
       user = false
     end
 
-    respond_to do |format|
+    # respond_to do |format|
       if user && user.authenticate(param_password)
         sign_in user
-        user_json = user.as_json(root: true,
+        user_json = user.as_json(root: false,
                                  except: [:password_digest, :admin, :status, :current_account_id, :created_at, :updated_at]
         )
 
-        pretty_json = JSON.pretty_generate(user_json)
+        pretty_json = JSON.pretty_generate(user_json)      # todo:later debug only
 
-        format.json { render json: pretty_json }      # todo:later debug only
+        render json: pretty_json
+        # format.json { render json: pretty_json }
       else
         trigger_rollback_at_app_level
-        flash.now[:error] = 'Invalid email/password combination'
-        render 'new'
+        error_text = { error: 'Could not log you on' }
+        error_json = error_text.as_json(root: false)
+        render json: error_json
+        # flash.now[:error] = 'Invalid email/password combination'
+        # render 'new'
       end
-    end
+    # end
   end
 
   def destroy
