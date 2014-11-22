@@ -1,6 +1,7 @@
 class NewsItemsController < ApplicationController
-  before_action :set_news_item, only: [:show, :edit, :update, :destroy]
+
   before_action :set_headers
+  before_action :set_news_item, only: [:show, :edit, :update, :destroy]
 
   # GET /news_items
   def index

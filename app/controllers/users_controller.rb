@@ -1,10 +1,15 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
+
+  skip_before_filter :verify_authenticity_token
+  before_filter :cors_preflight_check
+  after_filter :cors_set_access_control_hdrs
+
+  # before_action :set_headers
+  before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :profile, :following, :cares_for]
   before_action :signed_out_user, only: [:new, :create,]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
   before_action :not_self, only: [:destroy]
-  before_action :set_headers
 
   def show
     @user = User.find(params[:id])
@@ -159,10 +164,31 @@ class UsersController < ApplicationController
     redirect_to(root_url) if current_user?(@user)
   end
 
-  def set_headers
+  # def set_headers
+  #   headers['Access-Control-Allow-Origin'] = '*'
+  #   headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+  #   headers['Access-Control-Request-Method'] = '*'
+  #   headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  # end
+
+  # For all responses in this controller, return the CORS access control headers.
+  def cors_set_access_control_hdrs
     headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
-    headers['Access-Control-Request-Method'] = '*'
-    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    headers['Access-Control-Max-Age'] = '1728000'
+  end
+
+  # If this is a preflight OPTIONS request, then short-circuit the
+  # request, return only the necessary headers and return an empty
+  # text/plain.
+
+  def cors_preflight_check
+    if request.method.downcase == 'options'
+      headers['Access-Control-Allow-Origin'] = '*'
+      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+      headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-Prototype-Version'
+      headers['Access-Control-Max-Age'] = '1728000'
+      render :text => '', :content_type => 'text/plain'
+    end
   end
 end

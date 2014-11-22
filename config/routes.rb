@@ -1,5 +1,15 @@
 ShopFast::Application.routes.draw do
 
+  # match '*path', :controller => 'application', :action => 'handle_options_request', :constraints => {:method => 'OPTIONS'}
+
+  match 'users', to: 'users#index', via: [:options]
+  match 'users/:id', to: 'users#index', via: [:options]
+  match 'users/:id/following', to: 'users#index', via: [:options]
+  match 'users/:id/news_feed', to: 'users#index', via: [:options]
+  match 'users/profile', to: 'users#index', via: [:options]
+  match 'users/cares_for', to: 'users#index', via: [:options]
+  match 'users/create_json', to: 'users#index', via: [:options]
+
   resources :users do
     member do
       get :following, :news_feed
@@ -10,6 +20,14 @@ ShopFast::Application.routes.draw do
     end
   end
 
+
+  # match 'sessions', to: 'sessions#index', via: [:options]
+  # match 'sessions/:id', to: 'usessionsindex', via: [:options]
+  # match 'sessions/:id/following', to: 'sessions#index', via: [:options]
+  # match 'sessions/:id/news_feed', to: 'sessions#index', via: [:options]
+  # match 'sessions/profile', to: 'usessionsindex', via: [:options]
+  # match 'sessions/cares_for', to: 'sessions#index', via: [:options]
+  match 'sessions/create_json', to: 'sessions#index', via: [:options]
 
   resources :sessions,       only: [:new, :create, :destroy] do
     collection do

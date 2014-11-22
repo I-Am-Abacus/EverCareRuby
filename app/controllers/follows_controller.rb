@@ -1,6 +1,7 @@
 class FollowsController < ApplicationController
-  before_action :signed_in_user
+
   before_action :set_headers
+  before_action :signed_in_user
 
   # before_action :set_follow, only: [:show, :edit, :update, :destroy]
 
@@ -67,3 +68,4 @@ class FollowsController < ApplicationController
     headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   end
 end
+
