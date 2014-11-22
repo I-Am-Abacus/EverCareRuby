@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
 
+  before_action :set_headers
+
   def home
     if signed_in?
       @status_filter = params[:status]
@@ -23,5 +25,12 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+  end
+
+  def set_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   end
 end

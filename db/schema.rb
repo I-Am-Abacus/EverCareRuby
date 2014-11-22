@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122102329) do
+ActiveRecord::Schema.define(version: 20141122111435) do
 
   create_table "accounts", force: true do |t|
     t.integer  "user_id"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20141122102329) do
     t.integer  "status",                limit: 2
     t.integer  "current_account_id"
     t.integer  "age"
-    t.integer  "notes"
-    t.integer  "contact_details"
+    t.string   "notes"
+    t.string   "contact_details"
     t.string   "care_notes_collection"
   end
 

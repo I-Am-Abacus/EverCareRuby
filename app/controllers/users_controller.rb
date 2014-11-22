@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy]
   before_action :not_self, only: [:destroy]
+  before_action :set_headers
 
   def show
     @user = User.find(params[:id])
@@ -148,5 +149,12 @@ class UsersController < ApplicationController
   def not_self
     @user = User.find(params[:id])
     redirect_to(root_url) if current_user?(@user)
+  end
+
+  def set_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
   end
 end

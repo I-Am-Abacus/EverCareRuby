@@ -1,5 +1,6 @@
 class NewsItemsController < ApplicationController
   before_action :set_news_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_headers
 
   # GET /news_items
   def index
@@ -55,4 +56,11 @@ class NewsItemsController < ApplicationController
     def news_item_params
       params.require(:news_item).permit(:user_id, :carer_user_id, :narrative)
     end
+
+  def set_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  end
 end

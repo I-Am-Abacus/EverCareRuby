@@ -1,5 +1,7 @@
 class FollowsController < ApplicationController
   before_action :signed_in_user
+  before_action :set_headers
+
   # before_action :set_follow, only: [:show, :edit, :update, :destroy]
 
   respond_to :js
@@ -55,4 +57,13 @@ class FollowsController < ApplicationController
   #   def follow_params
   #     params.require(:follow).permit(:cared_for_user_id, :following_user_id)
   #   end
+
+  private
+
+  def set_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  end
 end
