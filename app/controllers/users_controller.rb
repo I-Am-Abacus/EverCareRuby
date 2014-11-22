@@ -27,6 +27,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_json
+    dummy = user_params     # todo:high debug only
+    @user = User.new(user_params)
+    respond_to do |format|
+      if @user.save
+        sign_in @user
+        user_json = @user.as_json(root:   true,
+                                  except: [:password_digest, :admin, :status, :current_account_id, :created_at, :updated_at]
+        )
+
+        pretty_json = JSON.pretty_generate(user_json) # todo:later debug only
+
+        format.json { render json: pretty_json }
+      else
+        trigger_rollback_at_app_level
+        render 'new' # todo:high how to handle / return errors??
+      end
+    end
+  end
+
   def edit
   end
 
@@ -52,16 +72,20 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
 
-  def cares_for
+  def profile
     @user = current_user!
     json1 = @user.as_json(root: true,
-                                  include:
-                                          {cared_for_users:
-                                               {
-                                                except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
-                                               }
-                                          },
-                                  except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+                          except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+    )
+
+    pretty_json = JSON.pretty_generate(json1)
+
+    render json: pretty_json
+  end
+
+  def cares_for
+    json1 = current_user!.cared_for_users.as_json(root: false,
+                              except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
     )
 
     pretty_json = JSON.pretty_generate(json1)
@@ -70,27 +94,22 @@ class UsersController < ApplicationController
   end
 
   def following
-    @user = current_user!
-    json1 = @user.as_json(root: true,
-                          include:
-                                  {following_users:
-                                       {
-                                           except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
-                                       }
-                                  },
-                          except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
+    id = params[:id]
+    user = User.find(id)
+    following_users = user.following_users.take(999)
+    json1 = following_users.as_json(root: false,
+                                    except: [:email, :password_digest, :admin, :admin, :current_account_id, :created_at, :updated_at]
     )
 
     pretty_json = JSON.pretty_generate(json1)
 
     render json: pretty_json
-
-
   end
 
   def news_feed
-    @user = current_user!
-    json1 = @user.as_json(root: true,
+    id = params[:id]
+    user = User.find(id)
+    json1 = user.as_json(root: true,
                           include:
                                   {news_items:
                                        {

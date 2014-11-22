@@ -1,0 +1,37 @@
+
+
+  belongs_to :current_account, class: Account # todo:later inverse_of: :current, dependent: :nullify
+
+
+app/models/user.rb
+    self.current_account = self.accounts.create!(name: self.name,
+                                                 public: self.admin? ? true : false,     # todo:later doesn't seem to work
+                                                 status: self.status)
+
+      account.update!(name: self.name,
+                      public: self.admin? ? true : false,     # todo:later doesn't seem to work
+                      status: self.status.to_s
+                      )
+
+
+
+requests/authentication_pages_spec.rb
+head:-
+# todo:later should this page test whether buttons should appear on forms for admin users?
+
+
+    describe 'as wrong user (where admin doesn`t matter)' do
+      # todo:later confirm index option excludes items that shouldn't be visible?
+
+
+
+models/user_spec.rb
+  describe 'with admin attribute set to true' do
+    before do
+      @user.save!
+      @user.toggle!(:admin)
+    end
+
+    it { should be_admin }
+    # its(:current_account) { should be_public }    # todo:later
+  end

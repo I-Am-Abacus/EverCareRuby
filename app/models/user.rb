@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # NB an Account is created when a new User is saved (after_create)
   # has_many :accounts, dependent: :restrict_with_exception
   has_many   :accounts, dependent: :destroy
-  belongs_to :current_account, class: Account # todo:later inverse_of: :current, dependent: :nullify
+  belongs_to :current_account, class: Account
   has_many   :sessions, dependent: :destroy
 
   has_many   :cared_for_link_following_user, class_name: 'Follow', foreign_key:  :cared_for_user_id, inverse_of: :cared_for_user, dependent: :destroy
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
     # raise 'user is admin' if self.admin?
 
     self.current_account = self.accounts.create!(name: self.name,
-                                                 public: self.admin? ? true : false,     # todo:later doesn't seem to work
+                                                 public: self.admin? ? true : false,
                                                  status: self.status)
 
     raise 'current_account is nil' if self.current_account.nil?
@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
     # raise "account is not nil #{account} // #{self.name} / #{account.name} // #{self.status} / #{account.status}"
     if account.name != self.name || !account.public? != !self.admin? || account.status != self.status
       account.update!(name: self.name,
-                      public: self.admin? ? true : false,     # todo:later doesn't seem to work
+                      public: self.admin? ? true : false,
                       status: self.status.to_s
                       )
     end

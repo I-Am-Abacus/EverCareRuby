@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  protect_from_forgery with: :null_session     # todo:high reinstate "with: :exception". See http://stackoverflow.com/questions/16258911/rails-4-authenticity-token
+  protect_from_forgery with: :null_session     # todo:high this can specify which domains are allowed? "Null_session" is from http://stackoverflow.com/questions/16258911/rails-4-authenticity-token
   around_action :wrap_in_transaction
 
   include SessionsHelper

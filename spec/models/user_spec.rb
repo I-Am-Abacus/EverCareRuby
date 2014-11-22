@@ -75,7 +75,7 @@ describe User do
     end
 
     it { should be_admin }
-    # its(:current_account) { should be_public }    # todo:later
+    # its(:current_account) { should be_public }
   end
 
   describe 'name' do

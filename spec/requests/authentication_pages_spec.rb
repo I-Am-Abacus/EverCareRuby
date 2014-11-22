@@ -3,7 +3,6 @@ require 'spec_helper'
 
 # NB this only tests situations where a page should fail to display due to lack of being logged on, or user's lack of authority.
 
-# todo:later should this page test whether buttons should appear on forms for admin users?
 
 describe 'Authentication' do
 
@@ -150,7 +149,6 @@ describe 'Authentication' do
     end
 
     describe 'as wrong user (where admin doesn`t matter)' do
-      # todo:later confirm index option excludes items that shouldn't be visible?
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) do
         FactoryGirl.create(:user, name: 'abc', email: 'wrong@example.com')

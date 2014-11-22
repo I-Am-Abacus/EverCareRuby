@@ -2,7 +2,11 @@ ShopFast::Application.routes.draw do
 
   resources :users do
     member do
-      get :cares_for, :following, :news_feed
+      get :following, :news_feed
+    end
+    collection do
+      get :profile, :cares_for
+      post :create_json
     end
   end
 
@@ -15,95 +19,6 @@ ShopFast::Application.routes.draw do
 
   resources :follows,        only: [:create, :destroy]
 
-
-
-  # resources :categories,     only: [:index, :show, :new, :create] do
-  #   collection do
-  #     get :pick
-  #   end
-  # end
-  #
-  # resources :families do
-  #   member do
-  #     get :plot_plant
-  #   end
-  #   collection do
-  #     get :pick, :plot_family
-  #   end
-  # end
-  #
-  # resources :plants,         only: [:show, :new, :create, :edit, :update, :destroy] do
-  #   member do
-  #     get  :link
-  #     post :setcategory
-  #   end
-  #   collection do
-  #     get :search
-  #   end
-  # end
-  #
-  # resources :affecter_links, only: [:create, :edit, :update, :destroy]
-  #
-  # resources :plots,          only: [:index, :show, :new, :create, :edit, :update]
-  #
-  # resources :plot_variants,  only: [:show] do
-  #   member do
-  #     get :showgrid, :shownested, :layoutdump
-  #   end
-  # end
-  #
-  # resources :plot_plants,    only: [:destroy] do
-  #   collection do
-  #     get  :newtarget
-  #     post :createtarget, :enable, :disable
-  #   end
-  # end
-  #
-  # resources :plot_links,  only: [:show] do
-  #   member do
-  #     post :enable, :disable
-  #   end
-  # end
-  #
-  #
-  #
-  # resources :products do        # todo:high delete all these
-  #   member do
-  #     get :newchild, :indextree, :treeselect
-  #   end
-  # end
-  # resources :shopping_lists
-  # resources :shopping_items do
-  #   member do
-  #     get :dispose
-  #     post :foundat,           :foundnoloc, :notat,           :clearhistory, :notfound, :nostockat, :resume
-  #     post :foundat, :sethere, :foundnoloc, :notat, :nothere, :clearhistory, :notfound, :nostockat, :resume
-  #     patch :disposeupdate
-  #   end
-  # end
-  # resources :chains do
-  #   collection do
-  #     get :startshop, :restartshop, :restartimmed
-  #   end
-  # end
-  # resources :shops,         only: [:index, :show, :new, :create, :edit, :update] do
-  #   collection do
-  #     get :startshop, :pickaisle
-  #   end
-  #   member do
-  #     get :created
-  #   end
-  # end
-  # resources :expeditions,   only: [:show, :edit] do
-  #   collection do
-  #     post :startshop
-  #   end
-  #   member do
-  #     get :lists, :pickaisle, :aislepicked, :pickitem, :summary, :restart
-  #     post :restartshop, :resumeshop, :checkout, :abandonshop
-  #     # patch :restartshop, :resumeshop, :checkout
-  #   end
-  # end
 
   root                      'static_pages#home'
   match '/signup',      to: 'users#new',            via: 'get'
