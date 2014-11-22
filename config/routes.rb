@@ -19,6 +19,17 @@ ShopFast::Application.routes.draw do
 
   resources :follows,        only: [:create, :destroy]
 
+  # resources :news_items,     only: [:show] do
+  #   # member do
+  #   #   get :following, :news_feed
+  #   # end
+  #   collection do
+  #     # get :profile, :cares_for
+  #     post :create_json
+  #   end
+  #
+  # end
+
 
   root                      'static_pages#home'
   match '/signup',      to: 'users#new',            via: 'get'
